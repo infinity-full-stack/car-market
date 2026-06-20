@@ -1,0 +1,16 @@
+[
+  {"model": "cars.carbrand", "pk": 1, "fields": {"name": "Toyota", "country": "Japan"}},
+  {"model": "cars.carbrand", "pk": 2, "fields": {"name": "BMW", "country": "Germany"}},
+  {"model": "cars.carbrand", "pk": 3, "fields": {"name": "Chevrolet", "country": "USA"}},
+
+  {"model": "cars.car", "pk": 1,  "fields": {"model_name": "Camry",    "price": "28000.00", "color": "White",  "year": 2022, "brand": 1}},
+  {"model": "cars.car", "pk": 2,  "fields": {"model_name": "Corolla",  "price": "22000.00", "color": "Black",  "year": 2021, "brand": 1}},
+  {"model": "cars.car", "pk": 3,  "fields": {"model_name": "Land Cruiser", "price": "85000.00", "color": "Silver", "year": 2023, "brand": 1}},
+  {"model": "cars.car", "pk": 4,  "fields": {"model_name": "RAV4",     "price": "35000.00", "color": "Blue",   "year": 2022, "brand": 1}},
+  {"model": "cars.car", "pk": 5,  "fields": {"model_name": "3 Series", "price": "45000.00", "color": "Black",  "year": 2023, "brand": 2}},
+  {"model": "cars.car", "pk": 6,  "fields": {"model_name": "5 Series", "price": "62000.00", "color": "White",  "year": 2022, "brand": 2}},
+  {"model": "cars.car", "pk": 7,  "fields": {"model_name": "X5",       "price": "75000.00", "color": "Gray",   "year": 2023, "brand": 2}},
+  {"model": "cars.car", "pk": 8,  "fields": {"model_name": "Malibu",   "price": "24000.00", "color": "Red",    "year": 2021, "brand": 3}},
+  {"model": "cars.car", "pk": 9,  "fields": {"model_name": "Equinox",  "price": "31000.00", "color": "Blue",   "year": 2022, "brand": 3}},
+  {"model": "cars.car", "pk": 10, "fields": {"model_name": "Tahoe",    "price": "55000.00", "color": "Black",  "year": 2023, "brand": 3}}
+]
