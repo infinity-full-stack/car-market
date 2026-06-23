@@ -1,6 +1,7 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from .models import CarBrand, Car
-from .serializers import CarBrandSerializer, CarSerializer
+from .models import CarBrand, Car, Comment
+from .serializers import CarBrandSerializer, CarSerializer, CommentSerializer
+from .permissions import IsAuthenticatedOrReadOnly, IsAdminOrReadOnly
 
 
 class CarBrandListCreateView(ListCreateAPIView):
@@ -42,3 +43,19 @@ class CarDetailView(RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Car.objects.all()
+
+
+class CommentListCreateView(ListCreateAPIView):
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        return Comment.objects.all()
+
+
+class CommentDetailView(RetrieveUpdateDestroyAPIView):
+    serializer_class = CommentSerializer
+    permission_classes = [IsAdminOrReadOnly]
+
+    def get_queryset(self):
+        return Comment.objects.all()
