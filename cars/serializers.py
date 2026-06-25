@@ -9,32 +9,27 @@ class CarBrandSerializer(serializers.ModelSerializer):
 
 
 class CarSerializer(serializers.ModelSerializer):
-    brand = CarBrandSerializer(read_only=True)
-    brand_id = serializers.PrimaryKeyRelatedField(
-        queryset=CarBrand.objects.all(), source='brand', write_only=True
-    )
+    my_brand = serializers.ChoiceField(choices=CarBrand.objects.all(), write_only=True)
 
     class Meta:
         model = Car
-        fields = ['id', 'model_name', 'price', 'color', 'year', 'brand', 'brand_id']
+        fields = '__all__'
+        depth = 1
+
+    def create(self, validated_data):
+        brand = validated_data.pop('my_brand')
+        car = Car.objects.create(**validated_data, brand=brand)
+        return car
+
+    def update(self, instance, validated_data):
+        instance.brand = validated_data.pop('my_brand') if validated_data.get('my_brand') else instance.brand
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    car = CarSerializer(read_only=True)
-    car_id = serializers.PrimaryKeyRelatedField(
-        queryset=Car.objects.all(), source='car', write_only=True
-    )
-
     class Meta:
         model = Comment
-        fields = ['id', 'car', 'car_id', 'author', 'text', 'created_at']
-
-    def create(self, validated_data):
-        return Comment.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        instance.car = validated_data.get('car', instance.car)
-        instance.author = validated_data.get('author', instance.author)
-        instance.text = validated_data.get('text', instance.text)
-        instance.save()
-        return instance
+        fields = ['id', 'text']

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class CarBrand(models.Model):
@@ -22,9 +23,9 @@ class Car(models.Model):
 
 class Comment(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='comments')
-    author = models.CharField(max_length=150)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.author} - {self.car.model_name}"
+        return f"{self.user} - {self.car.model_name}"

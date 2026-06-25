@@ -1,15 +1,14 @@
-from django.urls import path
-from .views import (
-    CarBrandListCreateView, CarBrandDetailView,
-    CarListCreateView, CarDetailView,
-    CommentListCreateView, CommentDetailView,
-)
+from django.urls import path, include
+from rest_framework.routers import SimpleRouter
+from .views import CarBrandViewSet, CarViewSet, CommentViewSet
+
+router = SimpleRouter()
+router.register('brands', CarBrandViewSet)
+router.register('cars', CarViewSet)
+router.register('comments', CommentViewSet)
 
 urlpatterns = [
-    path('brands/', CarBrandListCreateView.as_view()),
-    path('brands/<int:pk>/', CarBrandDetailView.as_view()),
-    path('cars/', CarListCreateView.as_view()),
-    path('cars/<int:pk>/', CarDetailView.as_view()),
-    path('comments/', CommentListCreateView.as_view()),
-    path('comments/<int:pk>/', CommentDetailView.as_view()),
+    path('', include(router.urls)),
+    path('cars/brand/<int:brand_id>/', CarViewSet.as_view({'get': 'list'})),
+    path('cars/<int:car_id>/comments/', CommentViewSet.as_view({'get': 'list', 'post': 'create'})),
 ]
