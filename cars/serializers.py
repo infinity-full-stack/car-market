@@ -24,12 +24,11 @@ class CarBrandSerializer(serializers.ModelSerializer):
 
 class CarSerializer(serializers.ModelSerializer):
     my_brand = serializers.ChoiceField(choices=CarBrand.objects.all(), write_only=True)
-    brand = BrandSerializerForCar(read_only=True)
+    brand_name = serializers.CharField(source='brand')
 
     class Meta:
         model = Car
-        fields = '__all__'
-        extra_kwargs = {'brand': {'write_only': True}}
+        exclude = ['color']
 
     def create(self, validated_data):
         brand = validated_data.pop('my_brand')

@@ -5,12 +5,12 @@ from .permissions import MyIsAuthenticatedOrReadOnly
 
 
 class CarBrandViewSet(ModelViewSet):
-    queryset = CarBrand.objects.all()
+    queryset = CarBrand.objects.all().prefetch_related('cars').only('id', 'name', 'country')
     serializer_class = CarBrandSerializer
 
 
 class CarViewSet(ModelViewSet):
-    queryset = Car.objects.all()
+    queryset = Car.objects.all().select_related('brand').defer('color')
     serializer_class = CarSerializer
 
     def get_queryset(self):
